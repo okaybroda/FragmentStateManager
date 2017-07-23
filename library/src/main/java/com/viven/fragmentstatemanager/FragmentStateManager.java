@@ -18,8 +18,8 @@ public abstract class FragmentStateManager {
     int curPos = -1;
     ViewGroup container;
     private FragmentTransaction mCurTransaction = null;
-    private ArrayList<Fragment.SavedState> mSavedState = new ArrayList<Fragment.SavedState>();
-    private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
+    private ArrayList<Fragment.SavedState> mSavedState = new ArrayList<>();
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
     private Fragment mCurrentPrimaryItem = null;
 
     public FragmentStateManager(ViewGroup container, FragmentManager fm) {

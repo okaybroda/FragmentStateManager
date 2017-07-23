@@ -49,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FrameLayout content = findViewById(R.id.content);
-
         fragmentStateManager = new FragmentStateManager(content, getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+                // A switch case should be here for showing different fragments for
+                // different positions which is omitted for simplicity
                 return new HolderFragment();
             }
         };
