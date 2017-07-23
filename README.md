@@ -61,3 +61,5 @@ protected void onRestoreInstanceState(Bundle savedInstanceState) {
     fragmentStateManager.restoreState(savedInstanceState.getParcelable("fragState"));
 }
 ```
+## Integration with BottomNavigationView
+Take a look at the sample cause there's too many things to explain here. Actions speak louder than words ;)
