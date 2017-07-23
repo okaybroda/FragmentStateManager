@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CountingFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@drawable/ic_dashboard_black_24dp"
+        app:title="Banana"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        tools:text="99"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:id="@+id/counter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_gravity="bottom|center"
+        android:text="Increase Counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>
