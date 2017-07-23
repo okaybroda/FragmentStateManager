@@ -20,17 +20,16 @@ public class CountingFragment extends Fragment {
 
     int counter;
 
+    public CountingFragment() {
+        // Required empty public constructor
+    }
+
     public static CountingFragment newInstance(int count) {
         Bundle bundle = new Bundle();
         bundle.putInt("count", count);
         CountingFragment countingFragment = new CountingFragment();
         countingFragment.setArguments(bundle);
         return countingFragment;
-    }
-
-
-    public CountingFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -51,7 +50,7 @@ public class CountingFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView txtCounter = (TextView) view.findViewById(R.id.counter);
+        TextView txtCounter = view.findViewById(R.id.counter);
         txtCounter.setText(counter + "");
 
         view.findViewById(R.id.btnIncrease).setOnClickListener(new View.OnClickListener() {

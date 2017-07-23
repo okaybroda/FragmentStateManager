@@ -15,14 +15,12 @@ public abstract class FragmentStateManager {
     private static final boolean DEBUG = false;
 
     private final FragmentManager mFragmentManager;
+    int curPos = -1;
+    ViewGroup container;
     private FragmentTransaction mCurTransaction = null;
-
     private ArrayList<Fragment.SavedState> mSavedState = new ArrayList<Fragment.SavedState>();
     private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
     private Fragment mCurrentPrimaryItem = null;
-    int curPos = -1;
-
-    ViewGroup container;
 
     public FragmentStateManager(ViewGroup container, FragmentManager fm) {
         mFragmentManager = fm;
@@ -48,7 +46,7 @@ public abstract class FragmentStateManager {
         return fragment;
     }
 
-    public Fragment instantiateItem(int position) {
+    private Fragment instantiateItem(int position) {
         // If we already have this item instantiated, there is nothing
         // to do.  This can happen when we are restoring the entire pager
         // from its saved state, where the fragment manager has already
@@ -83,7 +81,7 @@ public abstract class FragmentStateManager {
         return fragment;
     }
 
-    public void destroyItem(int position, Fragment fragment) {
+    private void destroyItem(int position, Fragment fragment) {
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
@@ -106,7 +104,7 @@ public abstract class FragmentStateManager {
         }
     }
 
-    public void setPrimaryItem(int position, Object object) {
+    private void setPrimaryItem(int position, Object object) {
         Fragment fragment = (Fragment) object;
         if (fragment != mCurrentPrimaryItem) {
             if (mCurrentPrimaryItem != null) {
@@ -121,7 +119,7 @@ public abstract class FragmentStateManager {
         }
     }
 
-    public void finishUpdate() {
+    private void finishUpdate() {
         if (mCurTransaction != null) {
             mCurTransaction.setAllowOptimization(true);
             mCurTransaction.commitNowAllowingStateLoss();

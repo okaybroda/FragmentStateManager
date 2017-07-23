@@ -19,21 +19,29 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragmentStateManager.changeFragment(0);
-                    return true;
-                case R.id.navigation_dashboard:
-                    fragmentStateManager.changeFragment(1);
-                    return true;
-                case R.id.navigation_notifications:
-                    fragmentStateManager.changeFragment(2);
-                    return true;
+            int position = getNavPositionFromMenuItem(item);
+            if (position != -1) {
+                fragmentStateManager.changeFragment(getNavPositionFromMenuItem(item));
+                return true;
             }
+
             return false;
         }
 
     };
+
+    private BottomNavigationView.OnNavigationItemReselectedListener
+            mOnNavigationItemReselectedListener =
+            new BottomNavigationView.OnNavigationItemReselectedListener() {
+                @Override
+                public void onNavigationItemReselected(@NonNull MenuItem item) {
+                    int position = getNavPositionFromMenuItem(item);
+                    if (position != -1) {
+                        fragmentStateManager.destroyItem(position);
+                        fragmentStateManager.changeFragment(position);
+                    }
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnNavigationItemReselectedListener(mOnNavigationItemReselectedListener);
     }
 
     @Override
@@ -77,5 +86,18 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         fragmentStateManager.restoreState(savedInstanceState.getParcelable("fragState"));
+    }
+
+    int getNavPositionFromMenuItem(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_home:
+                return 0;
+            case R.id.navigation_dashboard:
+                return 1;
+            case R.id.navigation_notifications:
+                return 2;
+            default:
+                return -1;
+        }
     }
 }
