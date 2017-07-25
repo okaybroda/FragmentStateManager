@@ -22,9 +22,19 @@ public abstract class FragmentStateManager {
      */
     public abstract Fragment getItem(int position);
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     public Fragment changeFragment(int position) {
         String tag = makeFragmentName(container.getId(), getItemId(position));
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+
+        /*
+          If fragment manager doesn't have an instance of the fragment, get an instance
+          and add it to the transaction. Else, attach the instance to transaction.
+         */
         Fragment fragment = mFragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
             fragment = getItem(position);
@@ -33,11 +43,13 @@ public abstract class FragmentStateManager {
             fragmentTransaction.attach(fragment);
         }
 
+        // Detach existing primary fragment
         Fragment curFrag = mFragmentManager.getPrimaryNavigationFragment();
         if (curFrag != null) {
             fragmentTransaction.detach(curFrag);
         }
 
+        // Set fragment as primary navigator for child manager back stack to be handled by system
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNowAllowingStateLoss();
