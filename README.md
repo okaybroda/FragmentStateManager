@@ -45,21 +45,33 @@ To change current fragment, call
 ```java
 fragmentStateManager.changeFragment(0); // 0 is the index of the fragment
 ```
-Override onSaveInstanceState to save fragment states
-```java
-@Override
-protected void onSaveInstanceState(Bundle outState) {
-    outState.putParcelable("fragState", fragmentStateManager.saveState());
-    super.onSaveInstanceState(outState);
-}
-```
-Override onRestoreInstanceState to restore fragment states
-```java
-@Override
-protected void onRestoreInstanceState(Bundle savedInstanceState) {
-    super.onRestoreInstanceState(savedInstanceState);
-    fragmentStateManager.restoreState(savedInstanceState.getParcelable("fragState"));
-}
-```
 ## Integration with BottomNavigationView
-Take a look at the sample cause there's too many things to explain here. Actions speak louder than words ;)
+Add item selected listener
+```java
+navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int position = getNavPositionFromMenuItem(item);
+        if (position != -1) {
+            fragmentStateManager.changeFragment(getNavPositionFromMenuItem(item));
+            return true;
+        }
+
+        return false;
+    }
+});
+```
+
+(Optional) Add item reselected listener. This will reset the fragment to it's original state
+```java
+navigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+    @Override
+    public void onNavigationItemReselected(@NonNull MenuItem item) {
+        int position = getNavPositionFromMenuItem(item);
+        if (position != -1) {
+            fragmentStateManager.removeFragment(position);
+            fragmentStateManager.changeFragment(position);
+        }
+    }
+});
+```
