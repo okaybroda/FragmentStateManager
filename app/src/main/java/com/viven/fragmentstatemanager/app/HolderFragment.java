@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.FrameLayout;
  * A simple {@link Fragment} subclass.
  */
 public class HolderFragment extends Fragment implements Navigation {
+    private final static String TAG = HolderFragment.class.getName();
 
     FrameLayout holderFrame;
 
@@ -25,21 +27,30 @@ public class HolderFragment extends Fragment implements Navigation {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_holder, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated");
         super.onViewCreated(view, savedInstanceState);
 
         holderFrame = view.findViewById(R.id.holderFrame);
 
-        if (savedInstanceState == null) {
+        if (getChildFragmentManager().findFragmentById(R.id.holderFrame) == null) {
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.holderFrame, CountingFragment.newInstance(0))
                     .commitAllowingStateLoss();
@@ -55,7 +66,14 @@ public class HolderFragment extends Fragment implements Navigation {
 
         getChildFragmentManager().beginTransaction()
                 .addToBackStack(null)
+                .setReorderingAllowed(true)
                 .replace(R.id.holderFrame, fragment)
                 .commitAllowingStateLoss();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
+        super.onDestroy();
     }
 }

@@ -1,9 +1,11 @@
 package com.viven.fragmentstatemanager.app;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onNavigationItemReselected(@NonNull MenuItem item) {
                     int position = getNavPositionFromMenuItem(item);
                     if (position != -1) {
-                        fragmentStateManager.destroyItem(position);
+                        fragmentStateManager.removeFragment(position);
                         fragmentStateManager.changeFragment(position);
                     }
                 }
@@ -65,28 +67,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setOnNavigationItemReselectedListener(mOnNavigationItemReselectedListener);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content);
-        if (fragment != null && !fragment.getChildFragmentManager().popBackStackImmediate()) {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("fragState", fragmentStateManager.saveState());
-
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        fragmentStateManager.restoreState(savedInstanceState.getParcelable("fragState"));
     }
 
     int getNavPositionFromMenuItem(MenuItem menuItem) {

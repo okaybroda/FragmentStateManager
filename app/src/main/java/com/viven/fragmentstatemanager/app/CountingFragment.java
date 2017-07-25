@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
  * A simple {@link Fragment} subclass.
  */
 public class CountingFragment extends Fragment {
+    private final static String TAG = CountingFragment.class.getName();
 
     Navigation navigation;
 
@@ -70,5 +72,11 @@ public class CountingFragment extends Fragment {
         if (getParentFragment() != null && getParentFragment() instanceof Navigation) {
             navigation = (Navigation) getParentFragment();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
+        super.onDestroy();
     }
 }
