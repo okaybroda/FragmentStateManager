@@ -1,5 +1,5 @@
 # FragmentStateManager
-An Android library that holds fragment states for BottomNavigationView.
+An Android library that holds fragment states for BottomNavigationView. Saves fragment back stack even after activity rotation. Implementation derived from FragmentStatePagerAdapter.
 
 ## Installation
 Add Jitpack to project level gradle file
