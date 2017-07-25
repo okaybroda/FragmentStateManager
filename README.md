@@ -14,7 +14,7 @@ allprojects {
 Then add library to module level gradle file
 ```gradle
 dependencies {
-  compile 'com.github.okaybroda:FragmentStateManager:1.0.0'
+  compile 'com.github.okaybroda:FragmentStateManager:1.+'
 }
 ```
 ## Usage
