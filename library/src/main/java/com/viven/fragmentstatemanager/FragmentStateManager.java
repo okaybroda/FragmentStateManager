@@ -23,9 +23,11 @@ public abstract class FragmentStateManager {
     public abstract Fragment getItem(int position);
 
     /**
+     * Shows fragment at position and detaches previous fragment if exists. If fragment is found in
+     * fragment manager, it is reattached else added.
      *
      * @param position
-     * @return
+     * @return fragment at position
      */
     public Fragment changeFragment(int position) {
         String tag = makeFragmentName(container.getId(), getItemId(position));
@@ -57,6 +59,12 @@ public abstract class FragmentStateManager {
         return fragment;
     }
 
+    /**
+     * Removes Fragment from Fragment Manager and clears all saved states. Call to changeFragment()
+     * will restart fragment from fresh state.
+     *
+     * @param position
+     */
     public void removeFragment(int position) {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.remove(mFragmentManager
