@@ -42,13 +42,13 @@ public abstract class FragmentStateManager {
             fragment = getItem(position);
             fragmentTransaction.add(container.getId(), fragment, tag);
         } else {
-            fragmentTransaction.attach(fragment);
+            fragmentTransaction.show(fragment);
         }
 
         // Detach existing primary fragment
         Fragment curFrag = mFragmentManager.getPrimaryNavigationFragment();
         if (curFrag != null) {
-            fragmentTransaction.detach(curFrag);
+            fragmentTransaction.hide(curFrag);
         }
 
         // Set fragment as primary navigator for child manager back stack to be handled by system
